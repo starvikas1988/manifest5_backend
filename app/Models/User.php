@@ -22,10 +22,11 @@ class User extends Authenticatable
         'name', 'email', 'password', 'role', 'category_id','phoneno', 'profile_image', 'device_id', 'status','effective_date','cease_date'
     ];
 
-    public function categories()
-    {
-        return $this->hasMany(Category::class); 
-    }
+      // Define many-to-many relationship with categories
+      public function categories()
+      {
+          return $this->belongsToMany(Category::class, 'operator_category')->withTimestamps();
+      }
 
     /**
      * The attributes that should be hidden for serialization.

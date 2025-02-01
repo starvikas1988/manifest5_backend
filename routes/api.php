@@ -1,9 +1,12 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AssignmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +32,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/users/{id}', [UserController::class, 'update']); // Update user
     Route::delete('/users/{id}', [UserController::class, 'destroy']); // Delete user
     Route::put('/users/{id}/status', [UserController::class, 'updateStatus']); 
+    Route::get('/category', [CategoryController::class, 'index']); 
+    Route::post('/category', [CategoryController::class, 'store']);
+    Route::get('/category/{id}', [CategoryController::class, 'show']); 
+    Route::put('/category/{id}', [CategoryController::class, 'update']); 
+    Route::delete('/category/{id}', [CategoryController::class, 'destroy']);
 
+    Route::post('/assignments', [AssignmentController::class, 'assignMatch']);
+    Route::get('/assignments', [AssignmentController::class, 'getAssignments']);
 });
 
 

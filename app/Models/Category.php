@@ -9,8 +9,11 @@ class Category extends Model
 {
     use HasFactory;
 
-    public function user()
+    protected $fillable = ['name', 'description'];
+
+    // Define many-to-many relationship with users
+    public function users()
     {
-        return $this->belongsTo(User::class); 
+        return $this->belongsToMany(User::class, 'operator_category')->withTimestamps();
     }
 }

@@ -101,12 +101,12 @@ class AuthController extends Controller
             return response()->json(['message' => 'User not authenticated'], 401);
         }
 
-        // ✅ 1. Check if user status is "Active"
+        // 1. Check if user status is "Active"
         if ($user->status !== 'Active') {
             return response()->json(['message' => 'Your account is not active. Please contact support.'], 403);
         }
 
-        // ✅ 2. Check if the current date is between `effective_date` and `cease_date`
+        //  2. Check if the current date is between `effective_date` and `cease_date`
         $currentDate = Carbon::now(); // Get current date
         if ($user->effective_date && $user->cease_date) {
             if ($currentDate->between(Carbon::parse($user->effective_date), Carbon::parse($user->cease_date))) {
@@ -114,17 +114,17 @@ class AuthController extends Controller
             }
         }
 
-        // ✅ 3. Device ID Handling
+        //  3. Device ID Handling
         $newDeviceId = $user->device_id ?: Str::uuid(); // Use existing device_id or generate a new one
 
-        // ✅ 4. Check if request contains a device_id and verify against stored device_id
+        //  4. Check if request contains a device_id and verify against stored device_id
         $requestDeviceId = $request->header('Device-ID'); // Read from request header
 
         if ($user->device_id && $requestDeviceId && $user->device_id !== $requestDeviceId) {
             return response()->json(['message' => 'Unauthorized device. Login allowed only from your registered device.'], 403);
         }
 
-        // ✅ 5. If first-time login, store the generated device ID
+        //  5. If first-time login, store the generated device ID
         if (!$user->device_id) {
             $user->device_id = $newDeviceId;
             $user->save();

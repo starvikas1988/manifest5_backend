@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phoneno')->nullable();
             $table->enum('role', ['admin', 'operator', 'user'])->default('user');
-            $table->unsignedBigInteger('category_id')->nullable();
             $table->string('profile_image')->nullable();
             $table->string('device_id')->nullable();
             $table->string('host_name')->nullable();
