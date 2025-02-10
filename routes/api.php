@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AssignmentController;
 
@@ -22,6 +23,19 @@ use App\Http\Controllers\AssignmentController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::post('/generateOtpMail', [AuthController::class, 'generateOtpMail']);
+Route::post('/validateOtp', [AuthController::class, 'validateOtp']);
+
+Route::post('/verify-email', [AuthController::class, 'verifyEmail']);
+
+Route::post('/change-password', [AuthController::class, 'changePassword']);
+Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+
+Route::post('/operator_login', [AuthController::class, 'operator_login']);
+
+
 Route::get('/users/search', [UserController::class, 'search']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
@@ -40,6 +54,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/assignments', [AssignmentController::class, 'assignMatch']);
     Route::get('/assignments', [AssignmentController::class, 'getAssignments']);
+   
+    Route::get('/tickets', [TicketController::class,  'index']);
+    Route::post('/tickets', [TicketController::class, 'store']);
+    Route::get('/tickets/{id}', [TicketController::class, 'show']);
+    Route::post('/tickets/{id}', [TicketController::class, 'update']);
+    Route::put('/tickets/{id}/status', [TicketController::class, 'updateStatus']); 
+    Route::delete('/tickets/{id}', [TicketController::class, 'destroy']);
 });
 
 

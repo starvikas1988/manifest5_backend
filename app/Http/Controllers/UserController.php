@@ -15,7 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('role', '!=', 'admin')->get();
+        // $users = User::where('role', '!=', 'admin')->get();
+        $users = User::all();
 
         // Replace all null values with an empty string
         $modifiedUsers = $users->map(function ($user) {

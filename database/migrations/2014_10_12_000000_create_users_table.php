@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('device_id')->nullable();
             $table->string('host_name')->nullable();
             $table->enum('status', ['Active', 'Inactive'])->default('Active');
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('otp')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
