@@ -16,4 +16,9 @@ class Category extends Model
     {
         return $this->belongsToMany(User::class, 'operator_category')->withTimestamps();
     }
+
+    public function markets()
+    {
+        return $this->hasMany(Market::class);
+    }
 }

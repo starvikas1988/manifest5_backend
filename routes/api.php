@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\MarketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/tickets/{id}', [TicketController::class, 'update']);
     Route::put('/tickets/{id}/status', [TicketController::class, 'updateStatus']); 
     Route::delete('/tickets/{id}', [TicketController::class, 'destroy']);
+
+    Route::apiResource('markets', MarketController::class);
 });
 
 
