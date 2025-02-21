@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->date('effective_date')->nullable()->after('status');
             $table->date('cease_date')->nullable()->after('effective_date');
+            $table->timestamp('email_verified_at')->nullable()->after('cease_date');
         });
     }
 

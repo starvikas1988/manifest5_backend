@@ -176,6 +176,7 @@ class AuthController extends Controller
 
         // Retrieve authenticated user
         $user = Auth::user();
+        // dd($user->name);
 
         if (!$user) {
             return response()->json(['message' => 'User not authenticated'], 401);
@@ -215,6 +216,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Login successful',
+            'user_name' => $user->name,
             'token' => $token,
             'device_id' => $user->device_id, // Return stored device ID
         ]);
