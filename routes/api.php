@@ -54,6 +54,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/category/{id}', [CategoryController::class, 'destroy']);
 
     Route::post('/assignments', [AssignmentController::class, 'assignMatch']);
+    Route::get('/getAssignmentsCount', [AssignmentController::class, 'getAssignmentsCount']);
+    Route::get('/getAssignmentedMatchIds', [AssignmentController::class, 'getAssignmentedMatchIds']);
     Route::get('/assignments', [AssignmentController::class, 'getAssignments']);
    
     Route::get('/tickets', [TicketController::class,  'index']);

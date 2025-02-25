@@ -3,11 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -28,6 +29,9 @@ class User extends Authenticatable
           return $this->belongsToMany(Category::class, 'operator_category')->withTimestamps();
       }
 
+      public function assignments(): HasMany {
+        return $this->hasMany(Assignment::class, 'operator_id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
