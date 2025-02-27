@@ -54,9 +54,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/category/{id}', [CategoryController::class, 'destroy']);
 
     Route::post('/assignments', [AssignmentController::class, 'assignMatch']);
-    Route::get('/getAssignmentsCount', [AssignmentController::class, 'getAssignmentsCount']);
+    //Route::get('/getAssignmentsCount', [AssignmentController::class, 'getAssignmentsCount']);
+    Route::get('/getAssignmentsCount/{operatorId?}', [AssignmentController::class, 'getUniqueMatchCount']);
+
     Route::get('/getAssignmentedMatchIds', [AssignmentController::class, 'getAssignmentedMatchIds']);
-    Route::get('/assignments', [AssignmentController::class, 'getAssignments']);
+   
+    Route::get('/operator/{operatorId}/assigned-matches', [AssignmentController::class, 'getOperatorAssignedMatchIds']);
+   // Route::get('/assignments', [AssignmentController::class, 'getAssignments']);
+    Route::get('/assignments/{userId?}', [AssignmentController::class, 'getAssignments']);
+
    
     Route::get('/tickets', [TicketController::class,  'index']);
     Route::post('/tickets', [TicketController::class, 'store']);

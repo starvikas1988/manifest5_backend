@@ -224,12 +224,16 @@ class AuthController extends Controller
 
     public function operator_login(Request $request)
     {
+        //dd($request->all());
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
+      
 
         $operator = User::where('email', $request->email)->where('role', 'operator')->first();
+        $operator_id = $operator->id;
+        
 
         if (!$operator) {
             return response()->json(['message' => 'No such Operator exists!!'], 401);
@@ -281,6 +285,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Login successful',
             'token' => $token,
+            'operator_id' => $operator_id,
             'device_id' => $user->device_id, // Return stored device ID
         ]);
 
