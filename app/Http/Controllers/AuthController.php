@@ -285,6 +285,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Login successful',
             'token' => $token,
+            'user_name' => $user->name,
             'operator_id' => $operator_id,
             'device_id' => $user->device_id, // Return stored device ID
         ]);
