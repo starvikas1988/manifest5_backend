@@ -5,10 +5,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MarketController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AssignmentController;
-use App\Http\Controllers\MarketController;
+use App\Http\Controllers\MatchModelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,13 @@ Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 
 Route::post('/operator_login', [AuthController::class, 'operator_login']);
+Route::post('/get-access-token', [AuthController::class, 'getAccessToken']);
 
+Route::get('matches/fetch', [MatchModelController::class, 'fetchMatchesFromVendor']);
+Route::get('getMatches', [MatchModelController::class, 'getMatches']);
+
+Route::get('fetchMatchesById/{matchId}', [MatchModelController::class, 'fetchMatchesById']);
+Route::get('/categories-with-markets', [CategoryController::class, 'fetchCategoriesWithMarkets']);
 
 Route::get('/users/search', [UserController::class, 'search']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
@@ -54,6 +61,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/category/{id}', [CategoryController::class, 'destroy']);
 
     Route::post('/assignments', [AssignmentController::class, 'assignMatch']);
+
+    Route::post('/assignments/bulk', [AssignmentController::class, 'bulkAssign']);
+
     //Route::get('/getAssignmentsCount', [AssignmentController::class, 'getAssignmentsCount']);
     Route::get('/getAssignmentsCount/{operatorId?}', [AssignmentController::class, 'getUniqueMatchCount']);
 

@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\OtpMail;
 use Carbon\Carbon; // Import Carbon for date comparisons
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 
 class AuthController extends Controller
@@ -309,6 +311,41 @@ class AuthController extends Controller
         } else {
             return response()->json(['message' => 'Failed to log out. Please try again.'], 500);
         }
+    }
+
+    public function getAccessToken()
+    {
+        $cacheKey = 'vendor_api_token';
+
+        // Check if token exists in cache
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
+        // API URL and Credentials
+        $authApiUrl = 'https://api.maniifest5.com/api/Auth/token';
+        $credentials = [
+            'email' => 'john@example.com', // Replace with actual email
+            'password' => 'password123',  // Replace with actual password
+        ];
+
+        // Make API Request
+        $response = Http::post($authApiUrl, $credentials);
+
+        // Check if response is successful
+        if ($response->successful()) {
+            $data = $response->json();
+            $accessToken = $data['response']['accessToken'] ?? null;
+            $expiresAt = strtotime($data['response']['expiresAt'] ?? 'now');
+
+            if ($accessToken) {
+                // Store token in cache with expiration time (minus a buffer)
+                Cache::put($cacheKey, $accessToken, $expiresAt - time() - 60);
+                return $accessToken;
+            }
+        }
+
+        return null; // Return null if authentication fails
     }
     
 }

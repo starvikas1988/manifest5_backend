@@ -10,7 +10,7 @@ class Assignment extends Model
     use HasFactory;
 
     protected $table = 'assignments';
-    protected $fillable = ['operator_id', 'category_id', 'match_id'];
+    protected $fillable = ['operator_id', 'category_id', 'match_id','market_id'];
 
     public function operator()
     {
